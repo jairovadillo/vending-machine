@@ -1,22 +1,44 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { Navigate } from "react-router";
-import { Products } from "../components/Product";
+import { ProductProps, Products } from "../components/Product";
 import { Box, Grid } from "@mui/material";
 import { PointOfSale } from "../components/PointOfSaleTerminal";
+import { api } from "../api";
 
 export const VendingMachine: FC = () => {
-  const user = true; // TODO connect to the redux store and retrieve the user name
+  const [products, setProducts] = useState<ProductProps[]>([]);
+  const [isLoading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  if (!user) {
-    return <Navigate to="/" />;
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const response: any = await api.getProducts();
+        const products: ProductProps[] = response.data;
+        setProducts(products);
+      } catch (error: any) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
 
-  // user is logged in
-  // return <Products />
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} md={8}>
-        <Products></Products>
+        <Products products={products}></Products>
       </Grid>
       <Grid item xs={12} md={4}>
         <PointOfSale customerName={"Jan"} balance={2.48}></PointOfSale>
