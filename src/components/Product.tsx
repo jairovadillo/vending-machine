@@ -35,31 +35,3 @@ export const Products = ({ products }: { products: Array<ProductProps> }) => {
     </Box>
   );
 };
-
-// <Grid item xs={4}>
-//   <Product title="Pastís de formatge" price={5} />
-// </Grid>
-// <Grid item xs={4}>
-//   <Product title="Carrot cake" price={5} />
-// </Grid>
-// <Grid item xs={4}>
-//   <Product title="Recuit de fonteta" price={5} />
-// </Grid>
-// <Grid item xs={4}>
-//   <Product title="Crema catalana" price={5} />
-// </Grid>
-// <Grid item xs={4}>
-//   <Product title="Valencià" price={3} />
-// </Grid>
-// <Grid item xs={4}>
-//   <Product title="Bisbalenc" price={3} />
-// </Grid>
-// <Grid item xs={4}>
-//   <Product title="Xuixo de crema" price={3} />
-// </Grid>
-// <Grid item xs={4}>
-//   <Product title="Catànies" price={3} />
-// </Grid>
-// <Grid item xs={4}>
-//   <Product title="Panellets" price={3} />
-// </Grid>

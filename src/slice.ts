@@ -22,11 +22,12 @@ export const vendingMachineSlice = createSlice({
         state.balance = 0.0;
       }
     },
-    setName: (state, action: PayloadAction<string | null>) => {
+    updateCustomerName: (state, action: PayloadAction<string | null>) => {
       state.name = action.payload;
     },
   },
 });
 
-export const { updateBalance, setName } = vendingMachineSlice.actions;
+export const { updateBalance, updateCustomerName } =
+  vendingMachineSlice.actions;
 export default vendingMachineSlice.reducer;

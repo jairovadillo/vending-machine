@@ -11,6 +11,9 @@ export const VendingMachine: FC = () => {
   const [products, setProducts] = useState<ProductProps[]>([]);
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const customerName = useSelector(
+    (state: RootState) => state.vendingMachine.name
+  );
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -28,6 +31,10 @@ export const VendingMachine: FC = () => {
 
     fetchProducts();
   }, []);
+
+  if (!customerName) {
+    return <Navigate to="/" />;
+  }
 
   if (isLoading) {
     return (
