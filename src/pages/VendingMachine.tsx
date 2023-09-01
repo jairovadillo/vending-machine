@@ -1,7 +1,7 @@
 import { FC, useCallback, useEffect, useState } from "react";
 import { Navigate } from "react-router";
 import { ProductProps, Products } from "../components/Product";
-import { Box, Grid } from "@mui/material";
+import { Box, CircularProgress, Grid } from "@mui/material";
 import { PointOfSale } from "../components/PointOfSaleTerminal";
 import { api } from "../api";
 import { useSelector } from "react-redux";
@@ -30,7 +30,13 @@ export const VendingMachine: FC = () => {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div
+        style={{ display: "flex", justifyContent: "center", marginTop: "25%" }}
+      >
+        <CircularProgress />
+      </div>
+    );
   }
 
   if (error) {
