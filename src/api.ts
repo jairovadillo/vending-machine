@@ -7,7 +7,7 @@ const simulateRequest = () => {
       price: 2,
     },
     {
-      title: "Carrot cake",
+      title: "Moscatell",
       price: 2,
     },
     {

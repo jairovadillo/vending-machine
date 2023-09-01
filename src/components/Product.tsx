@@ -31,7 +31,6 @@ export const Products = ({ products }: { products: Array<ProductProps> }) => {
             <Product title={product.title} price={product.price} />
           </Grid>
         ))}
-        ;
       </Grid>
     </Box>
   );

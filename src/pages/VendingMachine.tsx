@@ -1,9 +1,11 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { Navigate } from "react-router";
 import { ProductProps, Products } from "../components/Product";
 import { Box, Grid } from "@mui/material";
 import { PointOfSale } from "../components/PointOfSaleTerminal";
 import { api } from "../api";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
 export const VendingMachine: FC = () => {
   const [products, setProducts] = useState<ProductProps[]>([]);
@@ -41,7 +43,7 @@ export const VendingMachine: FC = () => {
         <Products products={products}></Products>
       </Grid>
       <Grid item xs={12} md={4}>
-        <PointOfSale customerName={"Jan"} balance={2.48}></PointOfSale>
+        <PointOfSale></PointOfSale>
       </Grid>
     </Grid>
   );
