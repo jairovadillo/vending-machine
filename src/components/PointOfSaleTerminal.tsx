@@ -4,7 +4,8 @@ import { Grid, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { updateBalance } from "../slice";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
+import { api } from "../api";
 
 interface POSProps {
   customerName: string;
@@ -15,24 +16,6 @@ interface POSInputAmountProps {
   amount: number;
 }
 
-export const InputAmount = ({ amount }: POSInputAmountProps) => {
-  const dispatch = useDispatch();
-
-  const handleOnClick = useCallback(
-    (balance: number) => {
-      dispatch(updateBalance(balance));
-    },
-    [dispatch]
-  );
-  return (
-    <Grid item xs={4} sx={{ paddingY: 4, textAlign: "center" }}>
-      <Button onClick={() => handleOnClick(amount)}>
-        {amount.toFixed(2)} €
-      </Button>
-    </Grid>
-  );
-};
-
 export const PointOfSale = () => {
   const balance = useSelector(
     (state: RootState) => state.vendingMachine.balance
@@ -40,10 +23,24 @@ export const PointOfSale = () => {
   const customerName = useSelector(
     (state: RootState) => state.vendingMachine.name
   );
+  const [error, setError] = useState(null);
   const dispatch = useDispatch();
-  const handleRefund = useCallback(() => {
-    dispatch(updateBalance(null));
-  }, [dispatch]);
+
+  const handleBalanceChange = async (amount: number | null) => {
+    if (!customerName) {
+      return;
+    }
+    try {
+      let newBalance = 0;
+      if (amount != null) {
+        newBalance = balance + amount;
+      }
+      await api.updateWallet(newBalance, customerName);
+      dispatch(updateBalance(newBalance));
+    } catch (error: any) {
+      setError(error);
+    }
+  };
 
   return (
     <Box sx={{ padding: 2 }}>
@@ -57,12 +54,13 @@ export const PointOfSale = () => {
           afegeix calers:
         </Typography>
         <Grid container spacing={3} sx={{ marginTop: 2 }}>
-          <InputAmount amount={0.1}></InputAmount>
-          <InputAmount amount={0.2}></InputAmount>
-          <InputAmount amount={0.5}></InputAmount>
-          <InputAmount amount={1}></InputAmount>
-          <InputAmount amount={2}></InputAmount>
-          <InputAmount amount={5}></InputAmount>
+          {[0.1, 0.2, 0.5, 1, 2, 5].map((amount, idx) => (
+            <Grid item xs={4} sx={{ paddingY: 4, textAlign: "center" }}>
+              <Button onClick={() => handleBalanceChange(amount)}>
+                {amount.toFixed(2)} €
+              </Button>
+            </Grid>
+          ))}
         </Grid>
       </Box>
       <Box sx={{ marginTop: 2 }}>
@@ -71,7 +69,7 @@ export const PointOfSale = () => {
         </Typography>
       </Box>
       <Box textAlign="center">
-        <Button onClick={() => handleRefund()}>Refund money</Button>
+        <Button onClick={() => handleBalanceChange(null)}>Refund money</Button>
       </Box>
     </Box>
   );

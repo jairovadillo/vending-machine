@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store";
 
 export const VendingMachine: FC = () => {
-  const [products, setProducts] = useState<ProductProps[]>([]);
+  const [products, setProducts] = useState<ProductProps[][]>([]);
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const customerName = useSelector(
@@ -20,7 +20,7 @@ export const VendingMachine: FC = () => {
       try {
         setLoading(true);
         const response: any = await api.getProducts();
-        const products: ProductProps[] = response.data;
+        const products: ProductProps[][] = response.data;
         setProducts(products);
       } catch (error: any) {
         setError(error);

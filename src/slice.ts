@@ -17,7 +17,7 @@ export const vendingMachineSlice = createSlice({
   reducers: {
     updateBalance: (state, action: PayloadAction<number | null>) => {
       if (action.payload) {
-        state.balance = +(state.balance + action.payload).toFixed(2);
+        state.balance = +action.payload.toFixed(2);
       } else {
         state.balance = 0.0;
       }
