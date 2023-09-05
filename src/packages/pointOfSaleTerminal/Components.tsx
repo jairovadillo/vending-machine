@@ -4,8 +4,7 @@ import { Grid, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { updateBalance } from "../../slice";
-import { useCallback, useState } from "react";
-import { api } from "../../api";
+import { useState } from "react";
 import POSTerminalRepository from "./Repositories";
 
 export const PointOfSale = () => {

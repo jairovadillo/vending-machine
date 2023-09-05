@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import { Login } from "./pages/Login";
-import { VendingMachine } from "./pages/VendingMachine";
+import { LoginPage } from "./pages/Login";
+import { VendingMachinePage } from "./pages/VendingMachine";
 import { NotFound } from "./pages/NotFound";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -18,8 +18,8 @@ function App() {
       <CssBaseline />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/vending-machine" element={<VendingMachine />} />
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/vending-machine" element={<VendingMachinePage />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
