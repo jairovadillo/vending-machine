@@ -47,6 +47,15 @@ export const PointOfSale = () => {
         <Grid container spacing={3} sx={{ marginTop: 2 }}>
           {[0.1, 0.2, 0.5, 1, 2, 5].map((amount, idx) => (
             <Grid item xs={4} sx={{ paddingY: 4, textAlign: "center" }}>
+              <Box
+                component="img"
+                sx={{
+                  maxWidth: "70%",
+                }}
+                src={
+                  "https://w7.pngwing.com/pngs/628/714/png-transparent-super-mario-coin-illustration-super-mario-bros-super-mario-world-minecraft-coin-stack-angle-heroes-super-mario-bros.png"
+                }
+              ></Box>
               <Button onClick={() => handleBalanceChange(amount)}>
                 {amount.toFixed(2)} €
               </Button>
