@@ -8,6 +8,7 @@ import { updateBalance } from "../../slice";
 import { Navigate } from "react-router";
 import { SlotProps } from "./DTOs";
 import SlotsRepository from "./Repositories";
+import { debug } from "console";
 
 export const Slot = ({ id, product, quantity }: SlotProps) => {
   const balance = useSelector(
@@ -25,7 +26,7 @@ export const Slot = ({ id, product, quantity }: SlotProps) => {
     }
 
     if (quantity < 1) {
-      alert("Producte estgotat");
+      alert("Producte esgotat");
       return;
     }
 
@@ -34,10 +35,11 @@ export const Slot = ({ id, product, quantity }: SlotProps) => {
         slotId,
         customerName
       );
-
       dispatch(updateBalance(newBalance));
+      alert(`Genial ${customerName}, disfruta del teu/teva ${product.name}!`);
     } catch (error: any) {
       setError(error);
+      throw error;
     }
   };
 
@@ -62,6 +64,7 @@ export const Slot = ({ id, product, quantity }: SlotProps) => {
         component="img"
         sx={{
           maxWidth: "100%",
+          maxHeight: 200,
         }}
         src={product.image}
       />

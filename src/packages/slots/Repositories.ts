@@ -17,11 +17,11 @@ class SlotsRepository {
   }
 
   async createOrder(slotId: string, customerName: string): Promise<any> {
-    const response = axios.post(urls.createOrder, {
+    const response = await axios.post(urls.createOrder, {
       slot_id: slotId,
       customer_name: customerName,
     });
-    return (await response).data.new_balance;
+    return response.data.new_balance;
   }
 }
 
