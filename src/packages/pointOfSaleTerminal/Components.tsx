@@ -2,19 +2,11 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { Grid, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store";
-import { updateBalance } from "../slice";
+import { RootState } from "../../store";
+import { updateBalance } from "../../slice";
 import { useCallback, useState } from "react";
-import { api } from "../api";
-
-interface POSProps {
-  customerName: string;
-  balance: number;
-}
-
-interface POSInputAmountProps {
-  amount: number;
-}
+import { api } from "../../api";
+import POSTerminalRepository from "./Repositories";
 
 export const PointOfSale = () => {
   const balance = useSelector(
@@ -35,7 +27,7 @@ export const PointOfSale = () => {
       if (amount != null) {
         newBalance = balance + amount;
       }
-      await api.updateWallet(newBalance, customerName);
+      await new POSTerminalRepository().updateWallet(newBalance, customerName);
       dispatch(updateBalance(newBalance));
     } catch (error: any) {
       setError(error);
