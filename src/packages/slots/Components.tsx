@@ -91,8 +91,9 @@ export const Slot = ({
           component="div"
           sx={{ ...(quantity < 1 && { filter: "brightness(0.3)" }) }}
         >
-          {product.name} ({quantity} left)
+          {product.name} ({quantity})
         </Typography>
+        <Typography variant="h6">{product.price}€</Typography>
       </CardContent>
     </Card>
   );
