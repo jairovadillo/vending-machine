@@ -19,7 +19,12 @@ import { SlotProps } from "./DTOs";
 import SlotsRepository from "./Repositories";
 import { debug } from "console";
 
-export const Slot = ({ id, product, quantity }: SlotProps) => {
+export const Slot = ({
+  id,
+  product,
+  quantity,
+  fetchSlots,
+}: SlotProps & { fetchSlots: Function }) => {
   const balance = useSelector(
     (state: RootState) => state.vendingMachine.balance
   );
@@ -45,7 +50,8 @@ export const Slot = ({ id, product, quantity }: SlotProps) => {
         customerName
       );
       dispatch(updateBalance(newBalance));
-      alert(`Genial ${customerName}, disfruta del teu/teva ${product.name}!`);
+      alert(`Genial ${customerName}, disfruta del ${product.name}!`);
+      fetchSlots();
     } catch (error: any) {
       setError(error);
       throw error;
@@ -85,7 +91,7 @@ export const Slot = ({ id, product, quantity }: SlotProps) => {
           component="div"
           sx={{ ...(quantity < 1 && { filter: "brightness(0.3)" }) }}
         >
-          {product.name}
+          {product.name} ({quantity} left)
         </Typography>
       </CardContent>
     </Card>
@@ -99,20 +105,19 @@ export const Slots = () => {
   const customerName = useSelector(
     (state: RootState) => state.vendingMachine.name
   );
+  const fetchSlots = async () => {
+    try {
+      setLoading(true);
+      const slots: SlotProps[] = await new SlotsRepository().getSlots();
+      setSlots(slots);
+    } catch (error: any) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchSlots = async () => {
-      try {
-        setLoading(true);
-        const slots: SlotProps[] = await new SlotsRepository().getSlots();
-        setSlots(slots);
-      } catch (error: any) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchSlots();
   }, []);
 
@@ -139,7 +144,7 @@ export const Slots = () => {
       <Grid container spacing={2}>
         {slots.map((slot, rowIdx) => (
           <Grid item xs={4}>
-            <Slot {...slot} />
+            <Slot {...slot} fetchSlots={fetchSlots} />
           </Grid>
         ))}
       </Grid>
