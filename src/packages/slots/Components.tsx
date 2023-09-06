@@ -44,6 +44,11 @@ export const Slot = ({
       return;
     }
 
+    if (product.price > balance) {
+      alert("No tens suficients calers per comprar aquest postre!");
+      return;
+    }
+
     try {
       const newBalance = await new SlotsRepository().createOrder(
         slotId,
