@@ -108,9 +108,10 @@ export const Slots = () => {
   );
   const fetchSlots = async () => {
     try {
-      setLoading(true);
-      const slots: SlotProps[] = await new SlotsRepository().getSlots();
-      setSlots(slots);
+      if (!slots) {
+        setLoading(true);
+      }
+      setSlots(await new SlotsRepository().getSlots());
     } catch (error: any) {
       setError(error);
     } finally {
@@ -120,6 +121,7 @@ export const Slots = () => {
 
   useEffect(() => {
     fetchSlots();
+    // setInterval(fetchSlots, 5000); // adds concurrency
   }, []);
 
   if (!customerName) {
