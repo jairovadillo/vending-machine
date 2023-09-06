@@ -113,7 +113,7 @@ export const Slots = () => {
   );
   const fetchSlots = async () => {
     try {
-      if (!slots) {
+      if (!slots || (slots && slots.length === 0)) {
         setLoading(true);
       }
       setSlots(await new SlotsRepository().getSlots());
