@@ -1,6 +1,15 @@
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import { CircularProgress, Grid, Typography } from "@mui/material";
+import {
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  CardMedia,
+  CircularProgress,
+  Grid,
+  Typography,
+} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { useEffect, useState } from "react";
@@ -52,27 +61,34 @@ export const Slot = ({ id, product, quantity }: SlotProps) => {
   }
 
   return (
-    <Box
+    <Card
       onClick={() => handleOrderProduct(id)}
       sx={{
         "&:hover": styleOnHover,
         padding: 2,
+        marginTop: 5,
         textAlign: "center",
+        maxHeight: 400,
       }}
     >
-      <Box
+      <CardMedia
         component="img"
-        sx={{
-          maxWidth: "100%",
-          maxHeight: 200,
-        }}
-        src={product.image}
+        height="250"
+        image={product.image}
+        alt={product.name}
+        sx={{ ...(quantity < 1 && { filter: "brightness(0.3)" }) }}
       />
-      <Typography variant="h2" sx={{ fontSize: 30 }}>
-        {product.name}
-      </Typography>
-      <Box>{product.price}€</Box>
-    </Box>
+      <CardContent>
+        <Typography
+          gutterBottom
+          variant="h5"
+          component="div"
+          sx={{ ...(quantity < 1 && { filter: "brightness(0.3)" }) }}
+        >
+          {product.name}
+        </Typography>
+      </CardContent>
+    </Card>
   );
 };
 
@@ -120,9 +136,6 @@ export const Slots = () => {
 
   return (
     <Box sx={{ padding: 2 }}>
-      <Typography variant="h1" sx={{ fontSize: 40 }}>
-        Productes
-      </Typography>
       <Grid container spacing={2}>
         {slots.map((slot, rowIdx) => (
           <Grid item xs={4}>
